@@ -1,0 +1,96 @@
+#Sample dataset given below
+#labels: Sports, Not Sports
+
+Text,Tag
+“A great game”,Sports
+“The election was over”,Not sports
+“Very clean match”,Sports
+“A clean but forgettable game”,Sports
+“It was a close election”,Not sports
+
+#Find out the tag (Label) of below text
+test text: "A very close game"
+??
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Approach: Since Naive Bayes is a probabilistic classifier, 
+we want to calculate the probability that the sentence
+ “A very close game” is Sports, 
+and the probability that it’s Not Sports. 
+
+For prediction, we will use the largest one.
+
+
+P(Sports | a very close game) : the probability that the 
+tag of a sentence is Sports given that the sentence is 
+“A very close game”.
+
+Bayes' Theorem:
+<Show image>
+<bayes theorm classifier>
+
+P(a\, very\, close\, game | Sports) = 
+P(a | Sports)* P(very | Sports) * P(close | Sports) * P(game | Sports)
+
+
+First, we calculate the a priori probability of each tag: 
+for a given sentence in our training data, the probability that
+ it is Sports P(Sports) is ⅗. Then, P(Not Sports) is ⅖. 
+
+
+<laplace smooting>
+
+How do we do it? By using something called Laplace smoothing: 
+we add 1 to every count so it’s never zero. 
+
+Word 	P(word | Sports) 	P(word | Not Sports)
+
+a 	   {2 + 1}/{11 + 14} 	  {1 + 1}/{9 + 14}
+
+very 	{1 + 1}/{11 + 14} 	  {0 + 1}/{9 + 14}
+
+close 	{0 + 1}/{11 + 14} 	  {1 + 1}/{9 + 14}
+
+game 	{2 + 1}/{11 + 14} 	  {0 + 1}/{9 + 14}
+ 
+
+
+
+
+
+Now we just multiply all the probabilities, and see who is bigger:
+
+P(a | Sports) \times P(very | Sports) \times P(close | Sports) \times P(game | Sports) \times P(Sports )\\ = 2.76\times 10^{-5}\\ 
+= 0.0000276
+\\\\ P(a \vert Not\, Sports) \times P(very | Not\, Sports) \times P(close | Not\, Sports) \times P(game | Not\, Sports) \times P( Not\, Sports)\\ = 0.572\times 10^{-5}\\ 
+= 0.00000572
+
+
+Excellent! Our classifier gives “A very close game” the Sports tag.
